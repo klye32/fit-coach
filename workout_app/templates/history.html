@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %}History · Fit Coach{% endblock %}
+
+{% block content %}
+  <h1 class="mb-4">Workout History</h1>
+  <div class="mb-4">
+    <canvas id="progress-chart" height="200"></canvas>
+  </div>
+  <div class="card shadow-sm">
+    <div class="card-header bg-secondary text-white">Recent Logs</div>
+    <div class="card-body p-0">
+      <table class="table mb-0" id="logs-table">
+        <thead class="table-light">
+          <tr>
+            <th>Date</th>
+            <th>Workout</th>
+            <th>Details</th>
+            <th>Comment</th>
+          </tr>
+        </thead>
+        <tbody id="logs-body"></tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="{{ url_for('static_files', filename='js/app.js') }}"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      loadHistory();
+    });
+  </script>
+{% endblock %}
