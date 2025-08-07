@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+
+{% block title %}Manage Workouts · Fit Coach{% endblock %}
+
+{% block content %}
+  <h1 class="mb-4">Manage Workouts</h1>
+  <div class="row">
+    <!-- Existing workouts list -->
+    <div class="col-lg-7 mb-4">
+      <div class="card shadow-sm">
+        <div class="card-header bg-secondary text-white">Your Workouts</div>
+        <div class="card-body">
+          <table class="table table-striped" id="workouts-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Sets</th>
+                <th>Reps</th>
+                <th>Weight</th>
+                <th>Distance</th>
+                <th>Duration</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="workouts-body">
+              <!-- populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- Add new workout form -->
+    <div class="col-lg-5">
+      <div class="card shadow-sm">
+        <div class="card-header bg-secondary text-white">Add New Workout</div>
+        <div class="card-body">
+          <form id="workout-form">
+            <div class="mb-3">
+              <label for="wname" class="form-label">Workout Name</label>
+              <input type="text" class="form-control" id="wname" required />
+            </div>
+            <div class="mb-3">
+              <label for="wtype" class="form-label">Type</label>
+              <select class="form-select" id="wtype" required>
+                <option value="strength" selected>Strength</option>
+                <option value="cardio">Cardio</option>
+              </select>
+            </div>
+            <!-- Strength specific -->
+            <div id="strength-fields">
+              <div class="row">
+                <div class="col">
+                  <label class="form-label">Sets</label>
+                  <input type="number" class="form-control" id="wsets" min="1" step="1" />
+                </div>
+                <div class="col">
+                  <label class="form-label">Reps</label>
+                  <input type="number" class="form-control" id="wreps" min="1" step="1" />
+                </div>
+              </div>
+              <div class="mt-2">
+                <label class="form-label">Weight (kg)</label>
+                <input type="number" class="form-control" id="wweight" min="0" step="0.5" />
+              </div>
+            </div>
+            <!-- Cardio specific -->
+            <div id="cardio-fields" class="d-none">
+              <div class="mt-2">
+                <label class="form-label">Distance (km)</label>
+                <input type="number" class="form-control" id="wdistance" min="0" step="0.1" />
+              </div>
+              <div class="mt-2">
+                <label class="form-label">Duration (min)</label>
+                <input type="number" class="form-control" id="wduration" min="0" step="1" />
+              </div>
+            </div>
+            <div class="mt-3 d-grid">
+              <button type="submit" class="btn btn-primary">Add Workout</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static_files', filename='js/app.js') }}"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      loadWorkouts();
+      const form = document.getElementById('workout-form');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        submitWorkout();
+      });
+      document.getElementById('wtype').addEventListener('change', toggleWorkoutFields);
+    });
+  </script>
+{% endblock %}
