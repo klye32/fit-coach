@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}Schedule · Fit Coach{% endblock %}
+
+{% block content %}
+  <h1 class="mb-4">Schedule</h1>
+  <p>Assign workouts to upcoming dates. Use the drop‑down menus below to select a workout or choose Rest for a day off.</p>
+  <form id="schedule-form">
+    <table class="table table-bordered" id="schedule-table">
+      <thead class="table-secondary">
+        <tr>
+          <th>Date</th>
+          <th>Workout</th>
+        </tr>
+      </thead>
+      <tbody id="schedule-body">
+        <!-- rows will be populated by JS -->
+      </tbody>
+    </table>
+    <div class="d-flex gap-2">
+      <button type="submit" class="btn btn-primary">Save Schedule</button>
+      <button id="clear-schedule" type="button" class="btn btn-outline-danger">Clear Schedule</button>
+    </div>
+  </form>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ url_for('static_files', filename='js/app.js') }}"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      loadSchedulePage();
+      document.getElementById('schedule-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        submitSchedule();
+      });
+      document.getElementById('clear-schedule').addEventListener('click', clearSchedule);
+    });
+  </script>
+{% endblock %}
