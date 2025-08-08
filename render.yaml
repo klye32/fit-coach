@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: fit-coach
+    env: docker
+    plan: free
+    dockerfilePath: Dockerfile
+    branch: main
+    region: oregon
+    port: 5000
